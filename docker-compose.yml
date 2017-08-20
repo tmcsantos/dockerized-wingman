@@ -22,6 +22,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - git-sources:/home/buildguy/wingman/source
+      - maven-cache:/home/buildguy/.m2/repository
     # ports:
     #  - "8181:8181"
     healthcheck:
