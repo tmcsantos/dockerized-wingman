@@ -17,10 +17,7 @@ term_handler() {
 trap "term_handler" SIGINT SIGTERM
 
 export KARAF_OPTS="$KARAF_OPTS -Djava.security.egd=file:/dev/./urandom"
-
-exec "$@" &
-pid="$!"
-
+exec "$@" & pid="$!"
 # Let's wrap it in a loop that doesn't end before the process is indeed stopped
 while kill -0 $pid > /dev/null 2>&1; do
   wait

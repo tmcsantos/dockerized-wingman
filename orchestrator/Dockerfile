@@ -5,7 +5,6 @@ MAINTAINER Tiago Santos <tsantos84@gmail.com>
 ARG user=buildguy
 ARG group=buildguy
 ARG uid=1000
-ARG did=0
 
 # wingman is run with user `buildguy`, uid = 1000
 # If you bind mount a volume from the host or a data container, 
@@ -27,10 +26,10 @@ COPY install.sh /usr/local/bin/
 RUN apk --no-cache add --update bash docker git perl sudo shadow && \
     mv /etc/profile.d/color_prompt /etc/profile.d/color_prompt.sh && \
     chown -R ${user}:${group} ${WINGMAN_HOME} && \
-    export DOCKER_GID=${did} && \
     bash -c "install.sh"
 
 COPY docker-entrypoint.sh /usr/local/bin/
+COPY post-install.sh /usr/local/bin/
 COPY wrapper-functions.sh /etc/profile.d/
 
 USER ${user}
