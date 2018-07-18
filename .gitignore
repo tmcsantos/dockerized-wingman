@@ -1,2 +1,4 @@
+*.jar
 *.tar
 **/jenkins_home
+playground

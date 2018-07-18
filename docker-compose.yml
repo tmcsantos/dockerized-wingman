@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 
 services:
   
@@ -9,27 +9,29 @@ services:
       - "50000:50000"
     volumes:
       - ./jenkins/jenkins_home:/var/jenkins_home
-    depends_on:
-      - wingman
+    networks:
+      - wingmanci
 
   wingman:
+    restart: on-failure:5 
     build: 
       context: orchestrator
       args:
         - GIT_USER_NAME=${GIT_USER_NAME:-Tiago Santos}
-        - GIT_USER_EMAIL=${GIT_USER_EMAIL:-tsantos@pentaho.com}
+        - GIT_USER_EMAIL=${GIT_USER_EMAIL:-tiago.dos.santos@hitachivantara.com}
         - uid=${USERID:-1000}
+        - ugrp=${USERGRP:-1000}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - git-sources:/home/buildguy/wingman/source
       - maven-cache:/home/buildguy/.m2/repository
-    # ports:
-    #  - "8181:8181"
-    healthcheck:
-      test: ["CMD", "/home/buildguy/wingman/bin/status"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    ports:
+      - "8181:8181"
+    networks:
+      - wingmanci
+
+networks:
+  wingmanci:
 
 volumes:
   git-sources:

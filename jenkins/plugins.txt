@@ -37,3 +37,4 @@ run-condition:latest
 gradle:latest
 build-blocker-plugin:latest
 log-parser:latest
+simple-theme-plugin:latest

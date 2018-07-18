@@ -11,3 +11,5 @@ RUN /usr/local/bin/install-plugins.sh < plugins.txt && \
     echo 2.60.2 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state && \
     echo 2.60.2 > /usr/share/jenkins/ref/jenkins.install.InstallUtil.lastExecVersion
 USER jenkins
+
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl --fail http://localhost:8080 || exit 1
